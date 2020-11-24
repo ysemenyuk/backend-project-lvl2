@@ -1,5 +1,4 @@
-const genDiff = (f1, f2) => {
-  console.log(f1, f2);
-};
+// import genDiff from '@hexlet/code';
 
-export default genDiff;
+// const diff = genDiff('files/file.1', 'files/file.2');
+// console.log(diff);
