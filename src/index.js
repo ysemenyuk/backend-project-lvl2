@@ -11,6 +11,7 @@ const genDiff = (file1, file2) => {
   const before = '  ';
   const result = [];
   Object.keys(object)
+    .sort()
     .map((key) => {
       if (_.has(obj1, key) && _.has(obj2, key)) {
         if (obj1[key] === obj2[key]) {
