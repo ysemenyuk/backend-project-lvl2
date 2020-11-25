@@ -5,5 +5,6 @@
     "editor.insertSpaces": true,
     "editor.tabSize": 2,
     "editor.autoIndent": "advanced"
-  }
+  },
+  "eslint.alwaysShowStatus": true
 }

@@ -1,16 +1,18 @@
 import _ from 'lodash';
 import fs from 'fs';
+import path from 'path';
+// import process from 'process';
 
 const genDiff = (filepath1, filepath2) => {
   // console.log(filepath1, filepath2);
-  const file1 = fs.readFileSync(filepath1, 'utf8');
-  const file2 = fs.readFileSync(filepath2, 'utf8');
-  // console.log(file1Data);
-  // console.log(file1Data);
+  const path1 = path.resolve('__fixtures__', filepath1);
+  const path2 = path.resolve('__fixtures__', filepath2);
+  const file1 = fs.readFileSync(path1, 'utf8');
+  const file2 = fs.readFileSync(path2, 'utf8');
   const obj1 = JSON.parse(file1);
   const obj2 = JSON.parse(file2);
-  // console.log(obj1)
-  // console.log(obj2)
+  // console.log(obj1);
+  // console.log(obj2);
   const object = { ...obj1, ...obj2 };
   // console.log(object)
   const before = '  ';

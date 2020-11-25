@@ -5,7 +5,7 @@ name: lint
 # Trigger the workflow on push or pull request
 on:
   - push
-  - pull_request
+
 
 jobs:
   build:
@@ -41,3 +41,7 @@ jobs:
         # Run Linter
         run: |
           make lint
+      - name: Run Test
+        # Run Linter
+        run: |
+          make test
