@@ -1,6 +1,6 @@
 import reverse from '../../src/gf.js';
 
-test('reverse', () => {
+test('Reverse', () => {
   expect(reverse('hello')).toEqual('olleh');
   expect(reverse('')).toEqual('');
 });
