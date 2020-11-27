@@ -1,8 +1,8 @@
 import stylish from './stylish.js';
 import plain from './plain.js';
 
-const format = (data, formatName = 'stylish') => {
-  if (formatName === 'plain') {
+const format = (data, formatter = 'stylish') => {
+  if (formatter === 'plain') {
     return plain(data);
   }
   return stylish(data);
