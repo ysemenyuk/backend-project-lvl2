@@ -1,47 +1,38 @@
+/* eslint-disable object-curly-newline */
 import _ from 'lodash';
 import parser from './parser.js';
+import format from '../formatters/index.js';
 
-const genDiff = (filepath1, filepath2) => {
+const getDiff = (object1, object2) => {
+  const resultKeys = _.union(Object.keys(object1), Object.keys(object2));
+  return resultKeys
+    .sort()
+    .reduce((acc, key) => {
+      if (!_.has(object2, key)) {
+        acc.push({ state: 'deleted', name: key, value1: object1[key] });
+      } else if (!_.has(object1, key)) {
+        acc.push({ state: 'added', name: key, value2: object2[key] });
+      } else if (_.isObject(object1[key]) && _.isObject(object2[key])) {
+        acc.push({ state: 'unchanged', name: key, value1: getDiff(object1[key], object2[key]) });
+      } else if (object1[key] === object2[key]) {
+        acc.push({ state: 'unchanged', name: key, value1: object1[key] });
+      } else if (object1[key] !== object2[key]) {
+        acc.push({ state: 'changed', name: key, value1: object1[key], value2: object2[key] });
+      }
+      return acc;
+    }, []);
+};
+
+const genDiff = (filepath1, filepath2, formatName) => {
   if (typeof filepath1 !== 'string' || typeof filepath2 !== 'string') {
     return false;
   }
   const obj1 = parser(filepath1);
   const obj2 = parser(filepath2);
-
-  const iter = (object1, object2, depth) => {
-    // console.log(depth, object);
-    // console.log(Object.keys(object));
-    const object = { ...object1, ...object2 };
-    const before = '  ';
-    const result = Object
-      .keys(object)
-      .sort()
-      .reduce((acc, key) => {
-        if (!_.has(object2, key)) {
-          acc.push(`${before}- ${key}: ${object1[key]}`);
-        } else if (!_.has(object1, key)) {
-          acc.push(`${before}+ ${key}: ${object2[key]}`);
-        } else if (_.isObject(object1[key]) && _.isObject(object2[key])) {
-          acc.push(`${before}  ${key}: ${iter(object1[key], object2[key], depth + 1)}`);
-        } else if (object1[key] === object2[key]) {
-          acc.push(`${before}  ${key}: ${object1[key]}`);
-        } else if (object1[key] !== object2[key]) {
-          acc.push(`${before}- ${key}: ${object1[key]}`, `${before}+ ${key}: ${object2[key]}`);
-        }
-        return acc;
-      }, []);
-    console.log(result);
-    return result;
-  };
-
-  return iter(obj1, obj2, 0);
-
-  // console.log(result);
-  // const resultString = result.join('\n');
-  // console.log(`{\n${resultString}\n}`);
-  // return `{\n${resultString}\n}`;
+  const diff = getDiff(obj1, obj2);
+  return format(diff, formatName);
 };
 
-console.log(genDiff('file11.json', 'file22.json'));
+// console.log(genDiff('file1.json', 'file2.json', 'plain'));
 
 export default genDiff;
