@@ -1,4 +1,4 @@
-import parser from '../../src/parser.js';
+import parser from '../src/parser.js';
 
 test('parser errors', () => {
   expect(() => parser()).toThrow();
