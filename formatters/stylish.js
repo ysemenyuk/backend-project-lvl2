@@ -3,6 +3,9 @@ import _ from 'lodash';
 
 const stylish = (diff) => {
   const iter = (data, depth) => {
+    if (!_.isObject(data)) {
+      return data;
+    }
     const before = ('  ').repeat((depth * 2) + 1);
     const after = ('  ').repeat(depth * 2);
     if (Array.isArray(data)) {
@@ -19,9 +22,6 @@ const stylish = (diff) => {
         return acc;
       }, []);
       return `{\n${result.join('\n')}\n${after}}`;
-    }
-    if (!_.isObject(data)) {
-      return `${data}`;
     }
     const result = Object.entries(data).map(([key, value]) => `${before}  ${key}: ${iter(value, depth + 1)}`);
     return `{\n${result.join('\n')}\n${after}}`;
