@@ -1,21 +1,27 @@
-/* eslint-disable object-curly-newline */
 import _ from 'lodash';
+import Differents from '../src/differents.js';
 
 const plain = (diff) => {
   const iter = (data, path) => {
-    if (Array.isArray(data)) {
-      const result = data.reduce((acc, { state, name, value1, value2 }) => {
-        if (state === 'added') {
-          acc.push(`Property '${path}${name}' was added with value: ${iter(value2)}`);
-        } else if (state === 'deleted') {
-          acc.push(`Property '${path}${name}' was removed`);
-        } else if (state === 'changed') {
-          acc.push(`Property '${path}${name}' was updated. From ${iter(value1)} to ${iter(value2)}`);
-        } else if (_.isObject(value1)) {
-          acc.push(iter(value1, `${path}${name}.`));
+    if (data instanceof Differents) {
+      const result = data.getAllPropertyNames().sort().map((name) => {
+        if (data.isPropertyAdded(name)) {
+          return `Property '${path}${name}' was added with value: ${iter(data.getAddedValue(name))}`;
         }
-        return acc;
-      }, []);
+        if (data.isPropertyDeleted(name)) {
+          return `Property '${path}${name}' was removed`;
+        }
+        if (data.isPropertyChanged(name)) {
+          const [valueBefore, valueAfter] = data.getChangedValues(name);
+          return `Property '${path}${name}' was updated. From ${iter(valueBefore)} to ${iter(valueAfter)}`;
+        }
+        if (data.isPropertyUnchanged(name)) {
+          return [];
+        }
+        const [objectBefore, objectAfter] = data.getBothObjects(name);
+        const newData = new Differents(objectBefore, objectAfter);
+        return iter(newData, `${path}${name}.`);
+      });
       return `${result.flat().join('\n')}`;
     }
     if (_.isObject(data)) {

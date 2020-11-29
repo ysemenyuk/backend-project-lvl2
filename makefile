@@ -3,11 +3,11 @@ install: install-deps
 install-deps:
 	npm ci
 
-run-json:	
-	gendiff file1.json file2.json
+run:	
+	gendiff file11.json file22.json
 
-run-yml:	
-	gendiff file1.yml file2.yml
+run-plain:	
+	gendiff file11.yml file22.yml -f plain
 
 test:
 	npm test

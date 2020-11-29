@@ -2,19 +2,19 @@
 // import _ from 'lodash';
 import parser from './parser.js';
 import format from '../formatters/index.js';
-import getDiff from './getdiff.js';
+import Differents from './differents.js';
 
-const genDiff = (filepath1, filepath2, formatter) => {
+const genDifferents = (filepath1, filepath2, formatter) => {
   if (typeof filepath1 !== 'string' || typeof filepath2 !== 'string') {
     throw new Error('error genDiff');
   }
-  const obj1 = parser(filepath1);
-  const obj2 = parser(filepath2);
+  const object1 = parser(filepath1);
+  const object2 = parser(filepath2);
 
-  const diff = getDiff(obj1, obj2);
-  return format(diff, formatter);
+  const differents = new Differents(object1, object2);
+  return format(differents, formatter);
 };
 
-genDiff('file11.json', 'file22.json', 'plain');
+// genDiff('file11.json', 'file22.json', 'plain');
 
-export default genDiff;
+export default genDifferents;

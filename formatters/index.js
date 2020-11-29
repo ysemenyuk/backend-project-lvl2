@@ -5,7 +5,10 @@ const format = (data, formatter = 'stylish') => {
   if (formatter === 'plain') {
     return plain(data);
   }
-  return stylish(data);
+  if (!formatter || formatter === 'stylish') {
+    return stylish(data);
+  }
+  throw new Error(`error: bad formatter ${formatter}`);
 };
 
 export default format;
