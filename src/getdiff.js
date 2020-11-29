@@ -13,7 +13,7 @@ const getDiff = (object1, object2) => {
         return ['added', key, object2[key]];
       }
       if (_.isObject(object1[key]) && _.isObject(object2[key])) {
-        return ['unchanged', key, getDiff(object1[key], object2[key])];
+        return ['objects', key, getDiff(object1[key], object2[key])];
       }
       if (object1[key] === object2[key]) {
         return ['unchanged', key, object1[key]];

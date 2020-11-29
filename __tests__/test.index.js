@@ -13,14 +13,14 @@ test('gendiff', () => {
 
 test('gendiff sylish', () => {
   const getFixturePath = (filename) => path.join(__dirname, '..', '__fixtures__', filename);
-  const expected = fs.readFileSync(getFixturePath('expected2.txt'), 'utf-8');
+  const expected = fs.readFileSync(getFixturePath('expected_stylish.txt'), 'utf-8');
   expect(genDiff('file11.json', 'file22.json')).toEqual(expected);
   expect(genDiff('file11.yml', 'file22.yml')).toEqual(expected);
 });
 
 test('gendiff plain', () => {
   const getFixturePath = (filename) => path.join(__dirname, '..', '__fixtures__', filename);
-  const expected = fs.readFileSync(getFixturePath('expected22.txt'), 'utf-8');
+  const expected = fs.readFileSync(getFixturePath('expected_plain.txt'), 'utf-8');
   expect(genDiff('file11.json', 'file22.json', 'plain')).toEqual(expected);
   expect(genDiff('file11.yml', 'file22.yml', 'plain')).toEqual(expected);
 });
