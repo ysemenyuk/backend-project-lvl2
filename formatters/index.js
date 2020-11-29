@@ -1,11 +1,11 @@
 import stylish from './stylish.js';
 import plain from './plain.js';
 
-const format = (data, formatter = 'stylish') => {
+const format = (different, formatter = 'stylish') => {
   if (formatter === 'plain') {
-    return plain(data);
+    return plain(different);
   }
-  return stylish(data);
+  return stylish(different);
 };
 
 export default format;

@@ -4,15 +4,16 @@ import _ from 'lodash';
 const plain = (diff) => {
   const iter = (data, path) => {
     if (Array.isArray(data)) {
-      const result = data.reduce((acc, { state, name, value1, value2 }) => {
-        if (state === 'added') {
-          acc.push(`Property '${path}${name}' was added with value: ${iter(value2)}`);
-        } else if (state === 'deleted') {
+      const result = data.reduce((acc, [status, name, value]) => {
+        if (status === 'added') {
+          acc.push(`Property '${path}${name}' was added with value: ${iter(value)}`);
+        } else if (status === 'deleted') {
           acc.push(`Property '${path}${name}' was removed`);
-        } else if (state === 'changed') {
+        } else if (status === 'changed') {
+          const [value1, value2] = value;
           acc.push(`Property '${path}${name}' was updated. From ${iter(value1)} to ${iter(value2)}`);
-        } else if (_.isObject(value1)) {
-          acc.push(iter(value1, `${path}${name}.`));
+        } else if (_.isObject(value)) {
+          acc.push(iter(value, `${path}${name}.`));
         }
         return acc;
       }, []);
