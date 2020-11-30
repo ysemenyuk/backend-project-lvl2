@@ -6,9 +6,10 @@ const genDiff = (filepath1, filepath2, formatter) => {
   const object1 = parser(filepath1);
   const object2 = parser(filepath2);
   const diff = getDiff(object1, object2);
+  // console.log(diff);
   return format(diff, formatter);
 };
 
-// genDiff('file11.json', 'file22.json', 'plain');
+// genDiff('file1.json', 'file2.json', 'json');
 
 export default genDiff;
