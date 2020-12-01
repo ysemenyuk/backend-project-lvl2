@@ -1,8 +1,8 @@
 [
   {
     "propertyName": "common",
-    "propertyStatus": "objects",
-    "valueBefore": [
+    "propertyStatus": "parent",
+    "children": [
       {
         "propertyName": "follow",
         "propertyStatus": "added",
@@ -39,12 +39,12 @@
       },
       {
         "propertyName": "setting6",
-        "propertyStatus": "objects",
-        "valueBefore": [
+        "propertyStatus": "parent",
+        "children": [
           {
             "propertyName": "doge",
-            "propertyStatus": "objects",
-            "valueBefore": [
+            "propertyStatus": "parent",
+            "children": [
               {
                 "propertyName": "wow",
                 "propertyStatus": "changed",
@@ -70,8 +70,8 @@
   },
   {
     "propertyName": "group1",
-    "propertyStatus": "objects",
-    "valueBefore": [
+    "propertyStatus": "parent",
+    "children": [
       {
         "propertyName": "baz",
         "propertyStatus": "changed",

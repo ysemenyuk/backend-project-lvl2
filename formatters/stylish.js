@@ -3,25 +3,30 @@ import _ from 'lodash';
 
 const stylish = (diff) => {
   const iter = (data, depth) => {
+    const newDepth = depth + 1;
     const before = ('  ').repeat((depth * 2) + 1);
     const after = ('  ').repeat(depth * 2);
     if (Array.isArray(data)) {
       const result = data.map(([propertyStatus, propertyName, propertyValue]) => {
+        if (propertyStatus === 'parent') {
+          const [children] = propertyValue;
+          return `${before}  ${propertyName}: ${iter(children, newDepth)}`;
+        }
         const [valueBefore, valueAfter] = propertyValue;
         switch (propertyStatus) {
           case 'added':
-            return `${before}+ ${propertyName}: ${iter(valueAfter, depth + 1)}`;
+            return `${before}+ ${propertyName}: ${iter(valueAfter, newDepth)}`;
           case 'deleted':
-            return `${before}- ${propertyName}: ${iter(valueBefore, depth + 1)}`;
+            return `${before}- ${propertyName}: ${iter(valueBefore, newDepth)}`;
           case 'unchanged':
-            return `${before}  ${propertyName}: ${iter(valueBefore, depth + 1)}`;
+            return `${before}  ${propertyName}: ${iter(valueBefore, newDepth)}`;
           case 'changed':
             return [
-              `${before}- ${propertyName}: ${iter(valueBefore, depth + 1)}`,
-              `${before}+ ${propertyName}: ${iter(valueAfter, depth + 1)}`,
+              `${before}- ${propertyName}: ${iter(valueBefore, newDepth)}`,
+              `${before}+ ${propertyName}: ${iter(valueAfter, newDepth)}`,
             ];
           default:
-            return `${before}  ${propertyName}: ${iter(valueBefore, depth + 1)}`;
+            throw new Error(`Unknown status: ${propertyStatus}`);
         }
       });
       return `{\n${result.flat().join('\n')}\n${after}}`;

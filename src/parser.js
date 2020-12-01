@@ -3,13 +3,20 @@ import path from 'path';
 import yaml from 'js-yaml';
 import _ from 'lodash';
 
+// import { fileURLToPath } from 'url';
+// import path, { dirname } from 'path';
+
+// const __filename = fileURLToPath(import.meta.url);
+// const __dirname = dirname(__filename);
+
 const parse = {
   json: JSON.parse,
   yml: yaml.safeLoad,
 };
 
 const readFile = (filepath) => {
-  const fullfilepath = path.resolve('__fixtures__', filepath);
+  const fullfilepath = path.resolve(filepath);
+
   return fs.readFileSync(fullfilepath, 'utf8');
 };
 
@@ -26,5 +33,8 @@ const parser = (filepath) => {
   }
   throw new Error(`error parse "${extname}" files`);
 };
+
+// console.log(readFile('/mnt/c/webprojects/backend-project-lvl2/__fixtures__/file2.json'));
+// console.log(readFile('__fixtures__/file2.json'));
 
 export default parser;

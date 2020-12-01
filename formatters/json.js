@@ -4,6 +4,14 @@ const json = (diff) => {
   const iter = (data) => {
     if (Array.isArray(data)) {
       const result = data.map(([propertyStatus, propertyName, propertyValue]) => {
+        if (propertyStatus === 'parent') {
+          const [children] = propertyValue;
+          return {
+            propertyName,
+            propertyStatus,
+            children: iter(children),
+          };
+        }
         const [valueBefore, valueAfter] = propertyValue;
         return {
           propertyName,

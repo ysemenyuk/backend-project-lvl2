@@ -5,6 +5,10 @@ const plain = (diff) => {
   const iter = (data, path) => {
     if (Array.isArray(data)) {
       const result = data.map(([status, name, value]) => {
+        if (status === 'parent') {
+          const [children] = value;
+          return iter(children, `${path}${name}.`);
+        }
         const [value1, value2] = value;
         switch (status) {
           case 'added':
@@ -16,7 +20,7 @@ const plain = (diff) => {
           case 'changed':
             return `Property '${path}${name}' was updated. From ${iter(value1)} to ${iter(value2)}`;
           default:
-            return iter(value1, `${path}${name}.`);
+            throw new Error(`Unknown status: ${status}`);
         }
       });
       return `${result.flat().join('\n')}`;
