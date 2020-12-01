@@ -1,24 +1,30 @@
 import fs from 'fs';
 import path from 'path';
 import yaml from 'js-yaml';
+import _ from 'lodash';
 
-const map = {
-  '.json': JSON.parse,
-  '.yml': yaml.safeLoad,
+const parse = {
+  json: JSON.parse,
+  yml: yaml.safeLoad,
+};
+
+const readFile = (filepath) => {
+  const fullfilepath = path.join('__fixtures__', filepath);
+  return fs.readFileSync(fullfilepath, 'utf8');
+};
+
+const getExtension = (filepath) => {
+  const extname = path.extname(filepath);
+  return extname.substring(1);
 };
 
 const parser = (filepath) => {
-  if (!filepath || typeof filepath !== 'string') {
-    throw new Error(`error: cannot parse ${filepath}`);
+  const file = readFile(filepath);
+  const extname = getExtension(filepath);
+  if (_.has(parse, extname)) {
+    return parse[extname](file);
   }
-
-  const fullfilepath = path.join('__fixtures__', filepath);
-  const file = fs.readFileSync(fullfilepath, 'utf8');
-  const extname = path.extname(filepath);
-
-  return map[extname](file);
+  throw new Error(`error parse "${extname}" files`);
 };
-
-console.log(parser('file1.yml'));
 
 export default parser;

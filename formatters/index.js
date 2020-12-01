@@ -1,18 +1,19 @@
+import _ from 'lodash';
 import stylish from './stylish.js';
 import plain from './plain.js';
 import json from './json.js';
 
-const format = (different, formatter = 'stylish') => {
-  if (!formatter || formatter === 'stylish') {
-    return stylish(different);
+const form = {
+  plain: (diff) => plain(diff),
+  stylish: (diff) => stylish(diff),
+  json: (diff) => json(diff),
+};
+
+const format = (diff, formatter) => {
+  if (_.has(form, formatter)) {
+    return form[formatter](diff);
   }
-  if (formatter === 'plain') {
-    return plain(different);
-  }
-  if (formatter === 'json') {
-    return json(different);
-  }
-  throw new Error(`error format ${formatter}`);
+  throw new Error(`error formatter "${formatter}"`);
 };
 
 export default format;

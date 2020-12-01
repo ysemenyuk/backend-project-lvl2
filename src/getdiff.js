@@ -1,25 +1,23 @@
-/* eslint-disable object-curly-newline */
 import _ from 'lodash';
 
 const getDiff = (object1, object2) => {
-  const resultKeys = _.union(Object.keys(object1), Object.keys(object2));
-  return resultKeys
+  const resultPropertyNames = _.union(Object.keys(object1), Object.keys(object2));
+  return resultPropertyNames
     .sort()
-    .map((key) => {
-      if (!_.has(object2, key)) {
-        return ['deleted', key, [object1[key], undefined]];
+    .reduce((acc, name) => {
+      if (!_.has(object2, name)) {
+        acc.push(['deleted', name, [object1[name], undefined]]);
+      } else if (!_.has(object1, name)) {
+        acc.push(['added', name, [undefined, object2[name]]]);
+      } else if (_.isObject(object1[name]) && _.isObject(object2[name])) {
+        acc.push(['objects', name, [getDiff(object1[name], object2[name])]]);
+      } else if (object1[name] === object2[name]) {
+        acc.push(['unchanged', name, [object1[name], object2[name]]]);
+      } else if (object1[name] !== object2[name]) {
+        acc.push(['changed', name, [object1[name], object2[name]]]);
       }
-      if (!_.has(object1, key)) {
-        return ['added', key, [undefined, object2[key]]];
-      }
-      if (_.isObject(object1[key]) && _.isObject(object2[key])) {
-        return ['objects', key, [getDiff(object1[key], object2[key])]];
-      }
-      if (object1[key] === object2[key]) {
-        return ['unchanged', key, [object1[key], object2[key]]];
-      }
-      return ['changed', key, [object1[key], object2[key]]];
-    });
+      return acc;
+    }, []);
 };
 
 export default getDiff;
