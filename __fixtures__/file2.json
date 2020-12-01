@@ -3,7 +3,7 @@
   "verbose": true,
   "host": "hexlet.io",
   "setting1": {
-    "set1": 11,
-    "set2": 33
+    "set11": 11,
+    "set22": 33
   }
 }

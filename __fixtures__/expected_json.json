@@ -1,0 +1,119 @@
+[
+  {
+    "propertyName": "common",
+    "propertyStatus": "objects",
+    "valueBefore": [
+      {
+        "propertyName": "follow",
+        "propertyStatus": "added",
+        "valueAfter": false
+      },
+      {
+        "propertyName": "setting1",
+        "propertyStatus": "unchanged",
+        "valueBefore": "Value 1",
+        "valueAfter": "Value 1"
+      },
+      {
+        "propertyName": "setting2",
+        "propertyStatus": "deleted",
+        "valueBefore": 200
+      },
+      {
+        "propertyName": "setting3",
+        "propertyStatus": "changed",
+        "valueBefore": true,
+        "valueAfter": null
+      },
+      {
+        "propertyName": "setting4",
+        "propertyStatus": "added",
+        "valueAfter": "blah blah"
+      },
+      {
+        "propertyName": "setting5",
+        "propertyStatus": "added",
+        "valueAfter": {
+          "key5": "value5"
+        }
+      },
+      {
+        "propertyName": "setting6",
+        "propertyStatus": "objects",
+        "valueBefore": [
+          {
+            "propertyName": "doge",
+            "propertyStatus": "objects",
+            "valueBefore": [
+              {
+                "propertyName": "wow",
+                "propertyStatus": "changed",
+                "valueBefore": "",
+                "valueAfter": "so much"
+              }
+            ]
+          },
+          {
+            "propertyName": "key",
+            "propertyStatus": "unchanged",
+            "valueBefore": "value",
+            "valueAfter": "value"
+          },
+          {
+            "propertyName": "ops",
+            "propertyStatus": "added",
+            "valueAfter": "vops"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "propertyName": "group1",
+    "propertyStatus": "objects",
+    "valueBefore": [
+      {
+        "propertyName": "baz",
+        "propertyStatus": "changed",
+        "valueBefore": "bas",
+        "valueAfter": "bars"
+      },
+      {
+        "propertyName": "foo",
+        "propertyStatus": "unchanged",
+        "valueBefore": "bar",
+        "valueAfter": "bar"
+      },
+      {
+        "propertyName": "nest",
+        "propertyStatus": "changed",
+        "valueBefore": {
+          "key": "value"
+        },
+        "valueAfter": "str"
+      }
+    ]
+  },
+  {
+    "propertyName": "group2",
+    "propertyStatus": "deleted",
+    "valueBefore": {
+      "abc": 12345,
+      "deep": {
+        "id": 45
+      }
+    }
+  },
+  {
+    "propertyName": "group3",
+    "propertyStatus": "added",
+    "valueAfter": {
+      "fee": 100500,
+      "deep": {
+        "id": {
+          "number": 45
+        }
+      }
+    }
+  }
+]

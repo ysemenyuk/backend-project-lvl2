@@ -4,7 +4,11 @@
   "proxy": "123.234.53.22",
   "follow": false,
   "setting1": {
-    "set1": 11,
-    "set2": 22
+    "set11": 11,
+    "set22": 22
+  },
+  "setting2": {
+    "set21": "aa",
+    "set22": "bb"
   }
 }

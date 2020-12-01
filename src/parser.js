@@ -7,9 +7,6 @@ const parser = (filepath) => {
     throw new Error(`error: cannot parse ${filepath}`);
   }
   const fp = path.resolve('__fixtures__', filepath);
-  if (!fs.existsSync(fp)) {
-    throw new Error(`error: ${filepath} not found`);
-  }
   const file = fs.readFileSync(fp, 'utf8');
   if (path.extname(filepath) === '.json') {
     return JSON.parse(file);
@@ -19,7 +16,5 @@ const parser = (filepath) => {
   }
   throw new Error(`error: cannot parse ${path.extname(filepath)} files`);
 };
-
-// parser('file1.js');
 
 export default parser;
