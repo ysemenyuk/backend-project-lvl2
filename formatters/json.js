@@ -1,5 +1,3 @@
-// import _ from 'lodash';
-
 const json = (diff) => {
   const iter = (data) => {
     if (Array.isArray(data)) {
