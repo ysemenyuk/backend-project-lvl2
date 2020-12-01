@@ -4,11 +4,10 @@ install-deps:
 	npm ci
 
 run:
-	gendiff -h	
-	gendiff file11.json file22.json
+	gendiff file1.json /backend-project-lvl2/__fixtures__/file2.json
 
 run-plain:	
-	gendiff file11.yml file22.yml -f plain
+	gendiff file1.yml file2.yml -f plain
 
 test:
 	npm test

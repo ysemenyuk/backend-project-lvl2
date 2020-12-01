@@ -9,7 +9,7 @@ const parse = {
 };
 
 const readFile = (filepath) => {
-  const fullfilepath = path.join('__fixtures__', filepath);
+  const fullfilepath = path.resolve('__fixtures__', filepath);
   return fs.readFileSync(fullfilepath, 'utf8');
 };
 
