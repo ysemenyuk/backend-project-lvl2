@@ -3,11 +3,11 @@
 const json = (diff) => {
   const iter = (data) => {
     if (Array.isArray(data)) {
-      const result = data.map(([status, name, propertyValue]) => {
+      const result = data.map(([propertyStatus, propertyName, propertyValue]) => {
         const [valueBefore, valueAfter] = propertyValue;
         return {
-          name,
-          status,
+          propertyName,
+          propertyStatus,
           valueBefore: iter(valueBefore),
           valueAfter: iter(valueAfter),
         };

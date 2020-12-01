@@ -10,6 +10,6 @@ const genDiff = (filepath1, filepath2, formatter) => {
   return format(diff, formatter);
 };
 
-genDiff('file11.json', 'file22.json', 'json');
+// genDiff('file11.json', 'file22.json', 'json');
 
 export default genDiff;
