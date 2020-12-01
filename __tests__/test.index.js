@@ -8,14 +8,14 @@ const __dirname = dirname(__filename);
 
 test('gendiff', () => {
   expect(() => genDiff('file1.json')).toThrow();
-  expect(() => genDiff('file1.json', 'file2')).toThrow();
+  expect(() => genDiff('__fixtures__file1.json', 'file2')).toThrow();
 });
 
 test('gendiff sylish', () => {
   const getFixturePath = (filename) => path.join(process.cwd(), '__fixtures__', filename);
   const expected = fs.readFileSync(getFixturePath('expected_stylish.txt'), 'utf-8');
-  expect(genDiff('__fixtures__/file1.json', '/mnt/c/webprojects/backend-project-lvl2/__fixtures__/file2.json')).toEqual(expected);
-  expect(genDiff('__fixtures__/file1.yml', '/mnt/c/webprojects/backend-project-lvl2/__fixtures__/file2.yml')).toEqual(expected);
+  expect(genDiff('__fixtures__/file1.json', '__fixtures__/file2.json')).toEqual(expected);
+  expect(genDiff('__fixtures__/file1.yml', '__fixtures__/file2.yml')).toEqual(expected);
 });
 
 test('gendiff plain', () => {

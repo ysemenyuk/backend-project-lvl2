@@ -7,7 +7,7 @@ run:
 	gendiff __fixtures__/file1.json /mnt/c/webprojects/backend-project-lvl2/__fixtures__/file2.json
 
 run-plain:	
-	gendiff __fixtures__file1.yml __fixtures__file2.yml -f plain
+	gendiff __fixtures__/file1.yml __fixtures__/file2.yml -f plain
 
 test:
 	npm test
