@@ -31,7 +31,6 @@ const plain = (diff) => {
   };
 
   const result = iter(diff, '');
-  console.log(result);
   return result;
 };
 

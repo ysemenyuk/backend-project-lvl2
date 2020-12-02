@@ -26,7 +26,6 @@
   },
   "dependencies": {
     "commander": "^6.2.0",
-    "immutable": "^4.0.0-rc.12",
     "js-yaml": "^3.14.0",
     "lodash": "^4.17.20"
   },

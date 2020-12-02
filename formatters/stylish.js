@@ -37,7 +37,6 @@ const stylish = (diff) => {
     return `{\n${result.join('\n')}\n${after}}`;
   };
   const result = iter(diff, 0);
-  console.log(result);
   return result;
 };
 

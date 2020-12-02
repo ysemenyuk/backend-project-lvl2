@@ -23,7 +23,6 @@ const json = (diff) => {
     return data;
   };
   const result = iter(diff);
-  console.log(JSON.stringify(result, null, 2));
   return JSON.stringify(result, null, 2);
 };
 
