@@ -1,10 +1,10 @@
 import _ from 'lodash';
+import { List } from 'immutable';
 
 const getDiff = (object1, object2) => {
-  const resultPropertyNames = _.union(Object.keys(object1), Object.keys(object2));
-  const result = [...resultPropertyNames];
-  return result
-    .sort()
+  const resultPropertyNames = List(_.union(Object.keys(object1), Object.keys(object2)));
+  const sortedNames = resultPropertyNames.sort();
+  const result = sortedNames
     .map((name) => {
       if (!_.has(object2, name)) {
         return ['deleted', name, [object1[name], undefined]];
@@ -20,6 +20,7 @@ const getDiff = (object1, object2) => {
       }
       return ['changed', name, [object1[name], object2[name]]];
     });
+  return result.toArray();
 };
 
 export default getDiff;
