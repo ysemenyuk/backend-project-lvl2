@@ -2,8 +2,8 @@ import _ from 'lodash';
 
 const getDiff = (object1, object2) => {
   const resultPropertyNames = _.union(Object.keys(object1), Object.keys(object2));
-  return resultPropertyNames
-    .slice()
+  const result = [...resultPropertyNames];
+  return result
     .sort()
     .map((name) => {
       if (!_.has(object2, name)) {
