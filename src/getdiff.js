@@ -1,5 +1,7 @@
 import _ from 'lodash';
-import { List } from 'immutable';
+import pkg from 'immutable';
+
+const { List } = pkg;
 
 const getDiff = (object1, object2) => {
   const resultPropertyNames = List(_.union(Object.keys(object1), Object.keys(object2)));
