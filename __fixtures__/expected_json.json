@@ -1,92 +1,89 @@
 [
   {
-    "propertyName": "common",
-    "propertyStatus": "parent",
+    "name": "common",
+    "status": "parent",
     "children": [
       {
-        "propertyName": "follow",
-        "propertyStatus": "added",
-        "valueAfter": false
+        "name": "follow",
+        "status": "added",
+        "value": false
       },
       {
-        "propertyName": "setting1",
-        "propertyStatus": "unchanged",
-        "valueBefore": "Value 1",
-        "valueAfter": "Value 1"
+        "name": "setting1",
+        "status": "unchanged",
+        "value": "Value 1"
       },
       {
-        "propertyName": "setting2",
-        "propertyStatus": "deleted",
-        "valueBefore": 200
+        "name": "setting2",
+        "status": "deleted",
+        "value": 200
       },
       {
-        "propertyName": "setting3",
-        "propertyStatus": "changed",
+        "name": "setting3",
+        "status": "changed",
         "valueBefore": true,
         "valueAfter": null
       },
       {
-        "propertyName": "setting4",
-        "propertyStatus": "added",
-        "valueAfter": "blah blah"
+        "name": "setting4",
+        "status": "added",
+        "value": "blah blah"
       },
       {
-        "propertyName": "setting5",
-        "propertyStatus": "added",
-        "valueAfter": {
+        "name": "setting5",
+        "status": "added",
+        "value": {
           "key5": "value5"
         }
       },
       {
-        "propertyName": "setting6",
-        "propertyStatus": "parent",
+        "name": "setting6",
+        "status": "parent",
         "children": [
           {
-            "propertyName": "doge",
-            "propertyStatus": "parent",
+            "name": "doge",
+            "status": "parent",
             "children": [
               {
-                "propertyName": "wow",
-                "propertyStatus": "changed",
+                "name": "wow",
+                "status": "changed",
                 "valueBefore": "",
                 "valueAfter": "so much"
               }
             ]
           },
           {
-            "propertyName": "key",
-            "propertyStatus": "unchanged",
-            "valueBefore": "value",
-            "valueAfter": "value"
+            "name": "key",
+            "status": "unchanged",
+            "value": "value"
           },
           {
-            "propertyName": "ops",
-            "propertyStatus": "added",
-            "valueAfter": "vops"
+            "name": "ops",
+            "status": "added",
+            "value": "vops"
           }
         ]
       }
     ]
   },
   {
-    "propertyName": "group1",
-    "propertyStatus": "parent",
+    "name": "group1",
+    "status": "parent",
     "children": [
       {
-        "propertyName": "baz",
-        "propertyStatus": "changed",
+        "name": "baz",
+        "status": "changed",
         "valueBefore": "bas",
         "valueAfter": "bars"
       },
       {
-        "propertyName": "foo",
-        "propertyStatus": "unchanged",
-        "valueBefore": "bar",
-        "valueAfter": "bar"
+        "name": "foo",
+        "status": "unchanged",
+        "value": "bar"
       },
       {
-        "propertyName": "nest",
-        "propertyStatus": "changed",
+        "name": "nest",
+        "status": "changed",
         "valueBefore": {
           "key": "value"
         },
@@ -95,9 +92,9 @@
     ]
   },
   {
-    "propertyName": "group2",
-    "propertyStatus": "deleted",
-    "valueBefore": {
+    "name": "group2",
+    "status": "deleted",
+    "value": {
       "abc": 12345,
       "deep": {
         "id": 45
@@ -105,9 +102,9 @@
     }
   },
   {
-    "propertyName": "group3",
-    "propertyStatus": "added",
-    "valueAfter": {
+    "name": "group3",
+    "status": "added",
+    "value": {
       "fee": 100500,
       "deep": {
         "id": {
