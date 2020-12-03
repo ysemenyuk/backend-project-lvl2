@@ -3,11 +3,17 @@ install: install-deps
 install-deps:
 	npm ci
 
-run:
-	gendiff __fixtures__/file1.json /mnt/c/webprojects/backend-project-lvl2/__fixtures__/file2.json
+start:
+	node start.js
+
+run-stylish:
+	gendiff __fixtures__/file1.json __fixtures__/file2.json.json
 
 run-plain:	
 	gendiff __fixtures__/file1.yml __fixtures__/file2.yml -f plain
+	
+run-json:	
+	gendiff __fixtures__/file1.json __fixtures__/file2.json -f json
 
 test:
 	npm test

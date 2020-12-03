@@ -1,29 +1,31 @@
+/* eslint-disable object-curly-newline */
+
+const getData = (item) => {
+  const [status, name, value] = item;
+  const [valueBefore, valueAfter] = value;
+  switch (status) {
+    case 'added':
+      return { name, status, value: valueAfter };
+    case 'deleted':
+    case 'unchanged':
+      return { name, status, value: valueBefore };
+    case 'changed':
+      return { name, status, valueBefore, valueAfter };
+    default:
+      throw new Error(`Unknown status: ${status}`);
+  }
+};
+
 const json = (diff) => {
-  const iter = (data) => {
-    if (Array.isArray(data)) {
-      const result = data.map(([propertyStatus, propertyName, propertyValue]) => {
-        if (propertyStatus === 'parent') {
-          const [children] = propertyValue;
-          return {
-            propertyName,
-            propertyStatus,
-            children: iter(children),
-          };
-        }
-        const [valueBefore, valueAfter] = propertyValue;
-        return {
-          propertyName,
-          propertyStatus,
-          valueBefore: iter(valueBefore),
-          valueAfter: iter(valueAfter),
-        };
-      });
-      return result;
+  const iter = (data) => data.map((item) => {
+    const [status, name, value] = item;
+    if (status === 'parent') {
+      return { name, status, children: iter(value) };
     }
-    return data;
-  };
-  const result = iter(diff);
-  return JSON.stringify(result, null, 2);
+    return getData(item);
+  });
+  const resultObject = iter(diff);
+  return JSON.stringify(resultObject, null, 2);
 };
 
 export default json;

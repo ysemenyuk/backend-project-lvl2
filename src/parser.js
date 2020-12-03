@@ -10,7 +10,6 @@ const parse = {
 
 const readFile = (filepath) => {
   const fullfilepath = path.resolve(filepath);
-
   return fs.readFileSync(fullfilepath, 'utf8');
 };
 

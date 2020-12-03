@@ -1,43 +1,53 @@
 import _ from 'lodash';
 
+const getSpaseBefore = (depth) => ('  ').repeat((depth * 2) + 1);
+const getSpaseAfter = (depth) => ('  ').repeat(depth * 2);
+
+const getData = (value, depth) => {
+  if (!_.isObject(value)) {
+    return value;
+  }
+  const spaceBefore = getSpaseBefore(depth);
+  const result = Object.entries(value).map(([key, val]) => `${spaceBefore}  ${key}: ${getData(val, depth + 1)}`);
+  const spaceAfter = getSpaseAfter(depth);
+  return `{\n${result.join('\n')}\n${spaceAfter}}`;
+};
+
+const getString = (item, depth) => {
+  const [status, name, value] = item;
+  const [valueBefore, valueAfter] = value;
+  const spaceBefore = getSpaseBefore(depth);
+  switch (status) {
+    case 'added':
+      return `${spaceBefore}+ ${name}: ${getData(valueAfter, depth + 1)}`;
+    case 'deleted':
+      return `${spaceBefore}- ${name}: ${getData(valueBefore, depth + 1)}`;
+    case 'unchanged':
+      return `${spaceBefore}  ${name}: ${getData(valueBefore, depth + 1)}`;
+    case 'changed':
+      return [
+        `${spaceBefore}- ${name}: ${getData(valueBefore, depth + 1)}`,
+        `${spaceBefore}+ ${name}: ${getData(valueAfter, depth + 1)}`,
+      ];
+    default:
+      throw new Error(`Unknown status: ${status}`);
+  }
+};
+
 const stylish = (diff) => {
   const iter = (data, depth) => {
-    const newDepth = depth + 1;
-    const before = ('  ').repeat((depth * 2) + 1);
-    const after = ('  ').repeat(depth * 2);
-    if (Array.isArray(data)) {
-      const result = data.map(([propertyStatus, propertyName, propertyValue]) => {
-        if (propertyStatus === 'parent') {
-          const [children] = propertyValue;
-          return `${before}  ${propertyName}: ${iter(children, newDepth)}`;
-        }
-        const [valueBefore, valueAfter] = propertyValue;
-        switch (propertyStatus) {
-          case 'added':
-            return `${before}+ ${propertyName}: ${iter(valueAfter, newDepth)}`;
-          case 'deleted':
-            return `${before}- ${propertyName}: ${iter(valueBefore, newDepth)}`;
-          case 'unchanged':
-            return `${before}  ${propertyName}: ${iter(valueBefore, newDepth)}`;
-          case 'changed':
-            return [
-              `${before}- ${propertyName}: ${iter(valueBefore, newDepth)}`,
-              `${before}+ ${propertyName}: ${iter(valueAfter, newDepth)}`,
-            ];
-          default:
-            throw new Error(`Unknown status: ${propertyStatus}`);
-        }
-      });
-      return `{\n${result.flat().join('\n')}\n${after}}`;
-    }
-    if (!_.isObject(data)) {
-      return data;
-    }
-    const result = Object.entries(data).map(([key, value]) => `${before}  ${key}: ${iter(value, depth + 1)}`);
-    return `{\n${result.join('\n')}\n${after}}`;
+    const result = data.map((item) => {
+      const [status, name, value] = item;
+      const spaceBefore = getSpaseBefore(depth);
+      if (status === 'parent') {
+        return `${spaceBefore}  ${name}: ${iter(value, depth + 1)}`;
+      }
+      return getString(item, depth);
+    });
+    const spaceAfter = getSpaseAfter(depth);
+    return `{\n${result.flat().join('\n')}\n${spaceAfter}}`;
   };
-  const result = iter(diff, 0);
-  return result;
+  return iter(diff, 0);
 };
 
 export default stylish;
