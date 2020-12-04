@@ -1,8 +1,8 @@
 import fs from 'fs';
 import path from 'path';
 import parser from './parser.js';
-import format from './formatters/index.js';
 import getAST from './getAST.js';
+import format from './formatters/index.js';
 
 const getObjectFromFile = (filepath) => {
   const fullfilepath = path.resolve(filepath);
