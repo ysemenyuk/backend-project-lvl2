@@ -7,7 +7,7 @@ const formatValue = (value) => {
   return '[complex value]';
 };
 
-const formats = {
+const format = {
   added: (item, path) => `Property '${path}${item.name}' was added with value: ${formatValue(item.value)}`,
   deleted: (item, path) => `Property '${path}${item.name}' was removed`,
   changed: (item, path) => `Property '${path}${item.name}' was updated. From ${formatValue(item.valueBefore)} to ${formatValue(item.valueAfter)}`,
@@ -16,13 +16,13 @@ const formats = {
 
 const plain = (ast) => {
   const iter = (data, path) => {
-    const result = data.map((item) => {
+    const formattedData = data.map((item) => {
       if (item.children) {
         return iter(item.children, `${path}${item.name}.`);
       }
-      return formats[item.status](item, path);
+      return format[item.status](item, path);
     });
-    return `${result.flat().join('\n')}`;
+    return `${formattedData.flat().join('\n')}`;
   };
 
   return iter(ast, '');

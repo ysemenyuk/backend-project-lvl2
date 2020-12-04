@@ -21,10 +21,10 @@ const getExtension = (filepath) => {
 const parser = (filepath) => {
   const file = readFile(filepath);
   const extname = getExtension(filepath);
-  if (_.has(parse, extname)) {
-    return parse[extname](file);
+  if (!_.has(parse, extname)) {
+    throw new Error(`error parse "${extname}" files`);
   }
-  throw new Error(`error parse "${extname}" files`);
+  return parse[extname](file);
 };
 
 export default parser;
