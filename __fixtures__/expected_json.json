@@ -1,7 +1,6 @@
 [
   {
     "name": "common",
-    "status": "parent",
     "children": [
       {
         "name": "follow",
@@ -38,11 +37,9 @@
       },
       {
         "name": "setting6",
-        "status": "parent",
         "children": [
           {
             "name": "doge",
-            "status": "parent",
             "children": [
               {
                 "name": "wow",
@@ -68,7 +65,6 @@
   },
   {
     "name": "group1",
-    "status": "parent",
     "children": [
       {
         "name": "baz",
