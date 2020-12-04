@@ -7,7 +7,7 @@ start:
 	node start.js
 
 run-stylish:
-	gendiff __fixtures__/file1.json __fixtures__/file2.json.json
+	gendiff __fixtures__/file1.json __fixtures__/file2.json
 
 run-plain:	
 	gendiff __fixtures__/file1.yml __fixtures__/file2.yml -f plain

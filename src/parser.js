@@ -1,5 +1,3 @@
-import fs from 'fs';
-import path from 'path';
 import yaml from 'js-yaml';
 import _ from 'lodash';
 
@@ -8,23 +6,11 @@ const parse = {
   yml: yaml.safeLoad,
 };
 
-const readFile = (filepath) => {
-  const fullfilepath = path.resolve(filepath);
-  return fs.readFileSync(fullfilepath, 'utf8');
-};
-
-const getExtension = (filepath) => {
-  const extname = path.extname(filepath);
-  return extname.substring(1);
-};
-
-const parser = (filepath) => {
-  const file = readFile(filepath);
-  const extname = getExtension(filepath);
-  if (!_.has(parse, extname)) {
-    throw new Error(`error parse "${extname}" files`);
+const parser = (data, type) => {
+  if (!_.has(parse, type)) {
+    throw new Error(`error parse "${type}" files`);
   }
-  return parse[extname](file);
+  return parse[type](data);
 };
 
 export default parser;

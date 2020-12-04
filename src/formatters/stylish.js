@@ -11,27 +11,20 @@ const formatValue = (value, depth) => {
   return `{\n${result.join('\n')}\n${tabsAfter(depth)}}`;
 };
 
-const format = (item, depth, func) => {
-  switch (item.status) {
-    case 'added':
-      return `${tabsBefore(depth)}+ ${item.name}: ${formatValue(item.value, depth + 1)}`;
-    case 'deleted':
-      return `${tabsBefore(depth)}- ${item.name}: ${formatValue(item.value, depth + 1)}`;
-    case 'changed':
-      return [
-        `${tabsBefore(depth)}- ${item.name}: ${formatValue(item.valueBefore, depth + 1)}`,
-        `${tabsBefore(depth)}+ ${item.name}: ${formatValue(item.valueAfter, depth + 1)}`,
-      ];
-    case 'unchanged':
-      return `${tabsBefore(depth)}  ${item.name}: ${formatValue(item.value, depth + 1)}`;
-    default:
-      return `${tabsBefore(depth)}  ${item.name}: ${func(item.value, depth + 1)}`;
-  }
+const format = {
+  added: (item, depth) => `${tabsBefore(depth)}+ ${item.name}: ${formatValue(item.value, depth + 1)}`,
+  deleted: (item, depth) => `${tabsBefore(depth)}- ${item.name}: ${formatValue(item.value, depth + 1)}`,
+  changed: (item, depth) => [
+    `${tabsBefore(depth)}- ${item.name}: ${formatValue(item.valueBefore, depth + 1)}`,
+    `${tabsBefore(depth)}+ ${item.name}: ${formatValue(item.valueAfter, depth + 1)}`,
+  ],
+  unchanged: (item, depth) => `${tabsBefore(depth)}  ${item.name}: ${formatValue(item.value, depth + 1)}`,
+  nested: (item, depth, func) => `${tabsBefore(depth)}  ${item.name}: ${func(item.value, depth + 1)}`,
 };
 
 const stylish = (ast) => {
   const iter = (data, depth) => {
-    const formattedData = data.map((item) => format(item, depth, iter));
+    const formattedData = data.map((item) => format[item.status](item, depth, iter));
     return `{\n${formattedData.flat().join('\n')}\n${tabsAfter(depth)}}`;
   };
   return iter(ast, 0);

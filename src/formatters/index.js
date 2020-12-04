@@ -1,13 +1,12 @@
 import _ from 'lodash';
 import stylish from './stylish.js';
 import plain from './plain.js';
-// import json from './json.js';
+import json from './json.js';
 
 const form = {
   plain,
   stylish,
-  // json,
-  json: (ast) => JSON.stringify(ast, null, 2),
+  json,
 };
 
 const format = (ast, formatter) => {

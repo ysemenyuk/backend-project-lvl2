@@ -9,7 +9,7 @@ const getAST = (object1, object2) => {
   const ast = sortedNames
     .map((name) => {
       if (isObject(object1[name]) && isObject(object2[name])) {
-        return { name, status: 'parent', value: getAST(object1[name], object2[name]) };
+        return { name, status: 'nested', value: getAST(object1[name], object2[name]) };
       }
       if (!_.has(object2, name)) {
         return { name, status: 'deleted', value: object1[name] };

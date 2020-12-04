@@ -1,7 +1,7 @@
 [
   {
     "name": "common",
-    "status": "parent",
+    "status": "nested",
     "value": [
       {
         "name": "follow",
@@ -38,11 +38,11 @@
       },
       {
         "name": "setting6",
-        "status": "parent",
+        "status": "nested",
         "value": [
           {
             "name": "doge",
-            "status": "parent",
+            "status": "nested",
             "value": [
               {
                 "name": "wow",
@@ -68,7 +68,7 @@
   },
   {
     "name": "group1",
-    "status": "parent",
+    "status": "nested",
     "value": [
       {
         "name": "baz",
