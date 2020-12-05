@@ -4,27 +4,21 @@ import _ from 'lodash';
 const isObject = (item) => (item instanceof Object && item.constructor === Object);
 
 const getProperty = (name, object1, object2, func) => {
-  const property = { name };
   const value1 = object1[name];
   const value2 = object2[name];
   if (isObject(value1) && isObject(value2)) {
-    property.status = 'nested';
-    property.value = func(value1, value2);
-  } else if (!_.has(object1, name)) {
-    property.status = 'added';
-    property.value = value2;
-  } else if (!_.has(object2, name)) {
-    property.status = 'deleted';
-    property.value = value1;
-  } else if (value1 !== value2) {
-    property.status = 'changed';
-    property.valueBefore = value1;
-    property.valueAfter = value2;
-  } else {
-    property.status = 'unchanged';
-    property.value = value1;
+    return { name, status: 'nested', value: func(value1, value2) };
   }
-  return property;
+  if (!_.has(object1, name)) {
+    return { name, status: 'added', value: value2 };
+  }
+  if (!_.has(object2, name)) {
+    return { name, status: 'deleted', value: value1 };
+  }
+  if (value1 !== value2) {
+    return { name, status: 'changed', valueBefore: value1, valueAfter: value2 };
+  }
+  return { name, status: 'unchanged', value: value1 };
 };
 
 const getAST = (object1, object2) => {
