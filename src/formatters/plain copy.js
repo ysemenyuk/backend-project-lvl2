@@ -12,11 +12,15 @@ const statusMap = {
   deleted: (item, path) => `Property '${path}${item.name}' was removed`,
   changed: (item, path) => `Property '${path}${item.name}' was updated. From ${formatValue(item.valueBefore)} to ${formatValue(item.valueAfter)}`,
   unchanged: () => [],
-  nested: (item, path, func) => func(item.value, `${path}${item.name}.`),
 };
 
 const plain = (data, path) => {
-  const formattedData = data.map((item) => statusMap[item.status](item, path, plain));
+  const formattedData = data.map((item) => {
+    if (item.status === 'nested') {
+      return plain(item.value, `${path}${item.name}.`);
+    }
+    return statusMap[item.status](item, path);
+  });
   return `${formattedData.flat().join('\n')}`;
 };
 

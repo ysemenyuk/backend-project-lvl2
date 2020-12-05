@@ -1,13 +1,6 @@
 /node_modules/
 /coverage
 /.vscode
-/src/formatters/plain 2.js
-/src/formatters/stylish 2.js
-/src/formatters/json 2.js
-/src/formatters/plain copy.js
-/src/formatters/stylish copy.js
-/src/formatters/json copy.js
-/src/getdiff.js
 start.js
 __fixtures__/file11.json
 __fixtures__/file22.json
