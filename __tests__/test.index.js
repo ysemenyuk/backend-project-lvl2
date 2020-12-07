@@ -8,11 +8,13 @@ test('gendiff', () => {
   expect(() => genDiff('__fixtures__/file1.json', '__fixtures__/file2.json', 'fff')).toThrow();
 });
 
-test('gendiff stylish', () => {
-  const getFixturePath = (filename) => path.join(process.cwd(), '__fixtures__', filename);
-  const expected = fs.readFileSync(getFixturePath('expected_stylish.txt'), 'utf-8');
-  expect(genDiff('__fixtures__/file1.json', '__fixtures__/file2.json')).toEqual(expected);
-  expect(genDiff('__fixtures__/file1.yml', '__fixtures__/file2.yml')).toEqual(expected);
+test.each([
+  ['__fixtures__/file1.json', '__fixtures__/file2.json', 'expected_stylish.txt'],
+  ['__fixtures__/file1.yml', '__fixtures__/file2.yml', 'expected_stylish.txt'],
+])('gendiff stylish "%s" "%s"', (a, b, name) => {
+  const getFixturePath = (filename) => path.resolve('__fixtures__', filename);
+  const expected = fs.readFileSync(getFixturePath(name), 'utf-8');
+  expect(genDiff(a, b)).toEqual(expected);
 });
 
 test('gendiff plain', () => {

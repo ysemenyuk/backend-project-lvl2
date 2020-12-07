@@ -3,11 +3,11 @@ import _ from 'lodash';
 
 const isObject = (item) => (item instanceof Object && item.constructor === Object);
 
-const getProperty = (name, object1, object2, func) => {
+const getProperty = (name, object1, object2, getAST) => {
   const value1 = object1[name];
   const value2 = object2[name];
   if (isObject(value1) && isObject(value2)) {
-    return { name, status: 'nested', value: func(value1, value2) };
+    return { name, status: 'nested', value: getAST(value1, value2) };
   }
   if (!_.has(object1, name)) {
     return { name, status: 'added', value: value2 };

@@ -12,7 +12,7 @@ const statusMap = {
   deleted: (item, path) => `Property '${path}${item.name}' was removed`,
   changed: (item, path) => `Property '${path}${item.name}' was updated. From ${formatValue(item.valueBefore)} to ${formatValue(item.valueAfter)}`,
   unchanged: () => [],
-  nested: (item, path, func) => func(item.value, `${path}${item.name}.`),
+  nested: (item, path, plain) => plain(item.value, `${path}${item.name}.`),
 };
 
 const plain = (data, path) => {

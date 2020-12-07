@@ -1,6 +1,6 @@
 import fs from 'fs';
 import path from 'path';
-import parser from './parser.js';
+import parse from './parse.js';
 import getAstWithDifferences from './getAST.js';
 import format from './formatters/index.js';
 
@@ -14,7 +14,7 @@ const getTypeOfFile = (filepath) => path.extname(filepath).substring(1);
 const getDataFromFile = (filepath) => {
   const data = readFile(filepath);
   const type = getTypeOfFile(filepath);
-  return parser(data, type);
+  return parse(data, type);
 };
 
 const genDiff = (filepath1, filepath2, formatter = 'stylish') => {
