@@ -15,8 +15,8 @@ const statusMap = {
   nested: (item, path, plain) => plain(item.value, `${path}${item.name}.`),
 };
 
-const plain = (data, path) => {
-  const formattedData = data.map((item) => statusMap[item.status](item, path, plain));
+const plain = (ast, path) => {
+  const formattedData = ast.map((item) => statusMap[item.status](item, path, plain));
   return `${formattedData.flat().join('\n')}`;
 };
 

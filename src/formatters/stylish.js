@@ -20,11 +20,11 @@ const statusMap = {
     `${tabsBefore(depth)}+ ${item.name}: ${formatValue(item.valueAfter, depth + 1)}`,
   ],
   unchanged: (item, depth) => `${tabsBefore(depth)}  ${item.name}: ${formatValue(item.value, depth + 1)}`,
-  nested: (item, depth, func) => `${tabsBefore(depth)}  ${item.name}: ${func(item.value, depth + 1)}`,
+  nested: (item, depth, stylish) => `${tabsBefore(depth)}  ${item.name}: ${stylish(item.value, depth + 1)}`,
 };
 
-const stylish = (data, depth) => {
-  const formattedData = data.map((item) => statusMap[item.status](item, depth, stylish));
+const stylish = (ast, depth) => {
+  const formattedData = ast.map((item) => statusMap[item.status](item, depth, stylish));
   return `{\n${formattedData.flat().join('\n')}\n${tabsAfter(depth)}}`;
 };
 

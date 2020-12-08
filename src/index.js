@@ -1,7 +1,7 @@
 import fs from 'fs';
 import path from 'path';
 import parse from './parse.js';
-import getAstWithDifferences from './getAST.js';
+import getAstWithDiff from './getAstWithDiff.js';
 import format from './formatters/index.js';
 
 const readFile = (filepath) => {
@@ -20,8 +20,8 @@ const getDataFromFile = (filepath) => {
 const genDiff = (filepath1, filepath2, formatter = 'stylish') => {
   const data1 = getDataFromFile(filepath1);
   const data2 = getDataFromFile(filepath2);
-  const astWithDifferences = getAstWithDifferences(data1, data2);
-  return format(astWithDifferences, formatter);
+  const astWithDiff = getAstWithDiff(data1, data2);
+  return format(astWithDiff, formatter);
 };
 
 export default genDiff;

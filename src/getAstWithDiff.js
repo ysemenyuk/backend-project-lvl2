@@ -6,14 +6,14 @@ const isObject = (item) => (item instanceof Object && item.constructor === Objec
 const getProperty = (name, object1, object2, getAST) => {
   const value1 = object1[name];
   const value2 = object2[name];
-  if (isObject(value1) && isObject(value2)) {
-    return { name, status: 'nested', value: getAST(value1, value2) };
-  }
   if (!_.has(object1, name)) {
     return { name, status: 'added', value: value2 };
   }
   if (!_.has(object2, name)) {
     return { name, status: 'deleted', value: value1 };
+  }
+  if (isObject(value1) && isObject(value2)) {
+    return { name, status: 'nested', value: getAST(value1, value2) };
   }
   if (value1 !== value2) {
     return { name, status: 'changed', valueBefore: value1, valueAfter: value2 };

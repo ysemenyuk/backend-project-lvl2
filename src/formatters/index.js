@@ -3,17 +3,17 @@ import stylish from './stylish.js';
 import plain from './plain.js';
 import json from './json.js';
 
-const form = {
+const formsMap = {
   plain,
   stylish,
   json,
 };
 
 const format = (ast, formatter) => {
-  if (!_.has(form, formatter)) {
+  if (!_.has(formsMap, formatter)) {
     throw new Error(`error formatter "${formatter}"`);
   }
-  return form[formatter](ast);
+  return formsMap[formatter](ast);
 };
 
 export default format;
