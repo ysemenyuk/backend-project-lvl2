@@ -1,11 +1,12 @@
 import _ from 'lodash';
 
-const isObject = (item) => (item instanceof Object && item.constructor === Object);
+// const isObject = (item) => (item instanceof Object && item.constructor === Object);
+
 const tabsBefore = (depth) => ('  ').repeat((depth * 2) + 1);
 const tabsAfter = (depth) => ('  ').repeat(depth * 2);
 
 const formatValue = (value, depth) => {
-  if (isObject(value)) {
+  if (_.isPlainObject(value)) {
     const formattedValue = _.entries(value).map(([key, val]) => `${tabsBefore(depth)}  ${key}: ${formatValue(val, depth + 1)}`);
     return `{\n${formattedValue.join('\n')}\n${tabsAfter(depth)}}`;
   }

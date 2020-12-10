@@ -3,9 +3,6 @@ install: install-deps
 install-deps:
 	npm ci
 
-start:
-	node start.js
-
 run-stylish:
 	gendiff __fixtures__/file1.json __fixtures__/file2.json
 

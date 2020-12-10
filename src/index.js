@@ -1,27 +1,29 @@
 import fs from 'fs';
 import path from 'path';
 import parse from './parse.js';
-import getAstWithDiff from './getAstWithDiff.js';
+import buildAst from './buildAst.js';
 import format from './formatters/index.js';
 
+const getFullFilePath = (filepath) => path.resolve(filepath);
+
 const readFile = (filepath) => {
-  const fullfilepath = path.resolve(filepath);
-  return fs.readFileSync(fullfilepath, 'utf8');
+  const fullFilePath = getFullFilePath(filepath);
+  return fs.readFileSync(fullFilePath, 'utf8');
 };
 
-const getTypeOfFile = (filepath) => path.extname(filepath).substring(1);
+const getType = (filepath) => path.extname(filepath).substring(1);
 
-const getDataFromFile = (filepath) => {
-  const data = readFile(filepath);
-  const type = getTypeOfFile(filepath);
-  return parse(data, type);
+const getData = (filepath) => {
+  const file = readFile(filepath);
+  const type = getType(filepath);
+  return parse(file, type);
 };
 
 const genDiff = (filepath1, filepath2, formatter = 'stylish') => {
-  const data1 = getDataFromFile(filepath1);
-  const data2 = getDataFromFile(filepath2);
-  const astWithDiff = getAstWithDiff(data1, data2);
-  return format(astWithDiff, formatter);
+  const data1 = getData(filepath1);
+  const data2 = getData(filepath2);
+  const ast = buildAst(data1, data2);
+  return format(ast, formatter);
 };
 
 export default genDiff;

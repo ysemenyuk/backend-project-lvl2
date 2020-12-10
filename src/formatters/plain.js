@@ -1,10 +1,13 @@
 import _ from 'lodash';
 
 const formatValue = (value) => {
-  if (!_.isObject(value) || value === null) {
-    return typeof value === 'string' ? `'${value}'` : value;
+  if (_.isObject(value)) {
+    return '[complex value]';
   }
-  return '[complex value]';
+  if (_.isString(value)) {
+    return `'${value}'`;
+  }
+  return value;
 };
 
 const statusMap = {

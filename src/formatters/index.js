@@ -1,12 +1,11 @@
 import _ from 'lodash';
 import stylish from './stylish.js';
 import plain from './plain.js';
-import json from './json.js';
 
 const formsMap = {
   plain,
   stylish,
-  json,
+  json: JSON.stringify,
 };
 
 const format = (ast, formatter) => {
