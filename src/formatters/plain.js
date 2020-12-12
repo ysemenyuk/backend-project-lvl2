@@ -1,6 +1,6 @@
 import _ from 'lodash';
 
-const formatValue = (value) => {
+const stringify = (value) => {
   if (_.isObject(value)) {
     return '[complex value]';
   }
@@ -10,17 +10,19 @@ const formatValue = (value) => {
   return value;
 };
 
-const statusMap = {
-  added: (item, path) => `Property '${path}${item.name}' was added with value: ${formatValue(item.value)}`,
+const mapping = {
+  added: (item, path) => `Property '${path}${item.name}' was added with value: ${stringify(item.value)}`,
   deleted: (item, path) => `Property '${path}${item.name}' was removed`,
-  changed: (item, path) => `Property '${path}${item.name}' was updated. From ${formatValue(item.valueBefore)} to ${formatValue(item.valueAfter)}`,
+  changed: (item, path) => `Property '${path}${item.name}' was updated. From ${stringify(item.valueBefore)} to ${stringify(item.valueAfter)}`,
   unchanged: () => [],
-  nested: (item, path, plain) => plain(item.value, `${path}${item.name}.`),
+  nested: (item, path, iter) => iter(item.value, `${path}${item.name}.`),
+};
+const plain = (ast) => {
+  const iter = (data, path) => {
+    const formattedData = data.map((item) => mapping[item.status](item, path, iter));
+    return formattedData.flat().join('\n');
+  };
+  return iter(ast, '');
 };
 
-const plain = (ast, path) => {
-  const formattedData = ast.map((item) => statusMap[item.status](item, path, plain));
-  return `${formattedData.flat().join('\n')}`;
-};
-
-export default (ast) => plain(ast, '');
+export default plain;

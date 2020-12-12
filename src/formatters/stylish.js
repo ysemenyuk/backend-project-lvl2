@@ -1,32 +1,32 @@
 import _ from 'lodash';
 
-// const isObject = (item) => (item instanceof Object && item.constructor === Object);
+const indent = (depth) => ('  ').repeat(depth * 2);
 
-const tabsBefore = (depth) => ('  ').repeat((depth * 2) + 1);
-const tabsAfter = (depth) => ('  ').repeat(depth * 2);
-
-const formatValue = (value, depth) => {
-  if (_.isPlainObject(value)) {
-    const formattedValue = _.entries(value).map(([key, val]) => `${tabsBefore(depth)}  ${key}: ${formatValue(val, depth + 1)}`);
-    return `{\n${formattedValue.join('\n')}\n${tabsAfter(depth)}}`;
+const stringify = (data, depth) => {
+  if (_.isPlainObject(data)) {
+    const formattedData = _.entries(data).map(([key, value]) => `${indent(depth)}    ${key}: ${stringify(value, depth + 1)}`);
+    return `{\n${formattedData.join('\n')}\n${indent(depth)}}`;
   }
-  return value;
+  return data;
 };
 
-const statusMap = {
-  added: (item, depth) => `${tabsBefore(depth)}+ ${item.name}: ${formatValue(item.value, depth + 1)}`,
-  deleted: (item, depth) => `${tabsBefore(depth)}- ${item.name}: ${formatValue(item.value, depth + 1)}`,
+const mapping = {
+  added: (item, depth) => `${indent(depth)}  + ${item.name}: ${stringify(item.value, depth + 1)}`,
+  deleted: (item, depth) => `${indent(depth)}  - ${item.name}: ${stringify(item.value, depth + 1)}`,
   changed: (item, depth) => [
-    `${tabsBefore(depth)}- ${item.name}: ${formatValue(item.valueBefore, depth + 1)}`,
-    `${tabsBefore(depth)}+ ${item.name}: ${formatValue(item.valueAfter, depth + 1)}`,
+    `${indent(depth)}  - ${item.name}: ${stringify(item.valueBefore, depth + 1)}`,
+    `${indent(depth)}  + ${item.name}: ${stringify(item.valueAfter, depth + 1)}`,
   ],
-  unchanged: (item, depth) => `${tabsBefore(depth)}  ${item.name}: ${formatValue(item.value, depth + 1)}`,
-  nested: (item, depth, stylish) => `${tabsBefore(depth)}  ${item.name}: ${stylish(item.value, depth + 1)}`,
+  unchanged: (item, depth) => `${indent(depth)}    ${item.name}: ${stringify(item.value, depth + 1)}`,
+  nested: (item, depth, iter) => `${indent(depth)}    ${item.name}: ${iter(item.value, depth + 1)}`,
 };
 
-const stylish = (ast, depth) => {
-  const formattedData = ast.map((item) => statusMap[item.status](item, depth, stylish));
-  return `{\n${formattedData.flat().join('\n')}\n${tabsAfter(depth)}}`;
+const stylish = (ast) => {
+  const iter = (data, depth) => {
+    const formattedData = data.map((item) => mapping[item.status](item, depth, iter));
+    return `{\n${formattedData.flat().join('\n')}\n${indent(depth)}}`;
+  };
+  return iter(ast, 0);
 };
 
-export default (ast) => stylish(ast, 0);
+export default stylish;
