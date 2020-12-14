@@ -11,16 +11,17 @@ const stringify = (value) => {
 };
 
 const mapping = {
-  added: (item, path) => `Property '${path}${item.name}' was added with value: ${stringify(item.value)}`,
-  deleted: (item, path) => `Property '${path}${item.name}' was removed`,
-  changed: (item, path) => `Property '${path}${item.name}' was updated. From ${stringify(item.valueBefore)} to ${stringify(item.valueAfter)}`,
+  added: (node, path) => `Property '${path}${node.name}' was added with value: ${stringify(node.value)}`,
+  deleted: (node, path) => `Property '${path}${node.name}' was removed`,
+  changed: (node, path) => `Property '${path}${node.name}' was updated. From ${stringify(node.deletedValue)} to ${stringify(node.value)}`,
   unchanged: () => [],
-  nested: (item, path, iter) => iter(item.value, `${path}${item.name}.`),
+  nested: (node, path, func) => func(node.value, `${path}${node.name}.`),
 };
+
 const plain = (ast) => {
   const iter = (data, path) => {
-    const formattedData = data.map((item) => mapping[item.status](item, path, iter));
-    return formattedData.flat().join('\n');
+    const lines = data.map((node) => mapping[node.status](node, path, iter));
+    return lines.flat().join('\n');
   };
   return iter(ast, '');
 };

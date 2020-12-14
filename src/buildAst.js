@@ -11,13 +11,13 @@ const buildAst = (object1, object2) => {
       return { name, status: 'added', value: value2 };
     }
     if (!_.has(object2, name)) {
-      return { name, status: 'deleted', value: value1 };
+      return { name, status: 'deleted', deletedValue: value1 };
     }
     if (_.isPlainObject(value1) && _.isPlainObject(value2)) {
       return { name, status: 'nested', value: buildAst(value1, value2) };
     }
     if (!_.isEqual(value1, value2)) {
-      return { name, status: 'changed', valueBefore: value1, valueAfter: value2 };
+      return { name, status: 'changed', value: value2, deletedValue: value1 };
     }
     return { name, status: 'unchanged', value: value1 };
   });
