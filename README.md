@@ -6,17 +6,17 @@
 ## description
 'Compares two configuration files and shows a difference.'
 
-## compares two json files and shows a difference with stylish formatter
+# compare two json files with stylish formatter
 [![asciicast](https://asciinema.org/a/PL4CAjHImG9pFGqNftKjGY4p5.svg)](https://asciinema.org/a/PL4CAjHImG9pFGqNftKjGY4p5)
 
-## compares two yml files and shows a difference with stylish formatter
+## two yml files with stylish formatter
 [![asciicast](https://asciinema.org/a/arr6Fonrbk65KYndBlWXzW5Cc.svg)](https://asciinema.org/a/arr6Fonrbk65KYndBlWXzW5Cc)
 
-## compares two nested json files and shows a difference with stylish formatter
+## two nested json files with stylish formatter
 [![asciicast](https://asciinema.org/a/287asSFc5YPke1qdGQlsRct26.svg)](https://asciinema.org/a/287asSFc5YPke1qdGQlsRct26)
 
-## compares two nested json files and shows a difference with plain formatter
+## two nested json files with plain formatter
 [![asciicast](https://asciinema.org/a/EHSXEmrshDLzLjJYx3Mml3umD.svg)](https://asciinema.org/a/EHSXEmrshDLzLjJYx3Mml3umD)
 
-## compares two nested json files and shows a difference with json string
+## two nested json files with json formatter
 [![asciicast](https://asciinema.org/a/irlNCOuCZ9OHHaCiWYUTDZKSI.svg)](https://asciinema.org/a/irlNCOuCZ9OHHaCiWYUTDZKSI)
