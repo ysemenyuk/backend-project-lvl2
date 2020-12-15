@@ -4,31 +4,35 @@ const indent = (depth) => ('  ').repeat(depth * 2);
 
 const format = (lines, depth) => `{\n${lines.flat().join('\n')}\n${indent(depth)}}`;
 
-const stringify = (data, depth, mapping) => {
+const mapping = {
+  added: (node, depth, func) => `${indent(depth)}  + ${node.name}: ${func(node.value, depth + 1)}`,
+  deleted: (node, depth, func) => `${indent(depth)}  - ${node.name}: ${func(node.deletedValue, depth + 1)}`,
+  changed: (node, depth, func) => [
+    `${indent(depth)}  - ${node.name}: ${func(node.deletedValue, depth + 1)}`,
+    `${indent(depth)}  + ${node.name}: ${func(node.value, depth + 1)}`,
+  ],
+  unchanged: (node, depth, func) => `${indent(depth)}    ${node.name}: ${func(node.value, depth + 1)}`,
+};
+
+const stringify = (data, depth) => {
   if (_.isPlainObject(data)) {
     const lines = _.entries(data).map(([name, value]) => {
       const node = { name, value };
-      return mapping.unchanged(node, depth);
+      return mapping.unchanged(node, depth, stringify);
     });
     return format(lines, depth);
   }
   return data;
 };
 
-const mapping = {
-  added: (node, depth) => `${indent(depth)}  + ${node.name}: ${stringify(node.value, depth + 1, mapping)}`,
-  deleted: (node, depth) => `${indent(depth)}  - ${node.name}: ${stringify(node.deletedValue, depth + 1, mapping)}`,
-  changed: (node, depth) => [
-    `${indent(depth)}  - ${node.name}: ${stringify(node.deletedValue, depth + 1, mapping)}`,
-    `${indent(depth)}  + ${node.name}: ${stringify(node.value, depth + 1, mapping)}`,
-  ],
-  unchanged: (node, depth) => `${indent(depth)}    ${node.name}: ${stringify(node.value, depth + 1, mapping)}`,
-  nested: (node, depth, iter) => `${indent(depth)}    ${node.name}: ${iter(node.value, depth + 1)}`,
-};
-
 const stylish = (ast) => {
   const iter = (data, depth) => {
-    const lines = data.map((node) => mapping[node.status](node, depth, iter));
+    const lines = data.map((node) => {
+      if (node.status === 'nested') {
+        return mapping.unchanged(node, depth, iter);
+      }
+      return mapping[node.status](node, depth, stringify);
+    });
     return format(lines, depth);
   };
   return iter(ast, 0);
