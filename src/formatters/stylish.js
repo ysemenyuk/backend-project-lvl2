@@ -7,10 +7,7 @@ const format = (lines, depth) => `{\n${lines.flat().join('\n')}\n${indent(depth)
 const mapping = {
   added: (node, depth, func) => `${indent(depth)}  + ${node.name}: ${func(node.value, depth + 1)}`,
   deleted: (node, depth, func) => `${indent(depth)}  - ${node.name}: ${func(node.deletedValue, depth + 1)}`,
-  changed: (node, depth, func) => [
-    `${indent(depth)}  - ${node.name}: ${func(node.deletedValue, depth + 1)}`,
-    `${indent(depth)}  + ${node.name}: ${func(node.value, depth + 1)}`,
-  ],
+  changed: (node, depth, func) => `${mapping.deleted(node, depth, func)}\n${mapping.added(node, depth, func)}`,
   unchanged: (node, depth, func) => `${indent(depth)}    ${node.name}: ${func(node.value, depth + 1)}`,
 };
 
