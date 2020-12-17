@@ -10,12 +10,14 @@ const stringify = (value) => {
   return value;
 };
 
+const fullName = (node, path) => path.concat(node.name).join('.');
+
 const mapping = {
-  added: (node, path) => `Property '${path}${node.name}' was added with value: ${stringify(node.value)}`,
-  deleted: (node, path) => `Property '${path}${node.name}' was removed`,
-  changed: (node, path) => `Property '${path}${node.name}' was updated. From ${stringify(node.deletedValue)} to ${stringify(node.value)}`,
+  added: (node, path) => `Property '${fullName(node, path)}' was added with value: ${stringify(node.value)}`,
+  deleted: (node, path) => `Property '${fullName(node, path)}' was removed`,
+  changed: (node, path) => `Property '${fullName(node, path)}' was updated. From ${stringify(node.deletedValue)} to ${stringify(node.value)}`,
   unchanged: () => [],
-  nested: (node, path, func) => func(node.value, `${path}${node.name}.`),
+  nested: (node, path, func) => func(node.value, [...path, node.name]),
 };
 
 const plain = (ast) => {
@@ -23,7 +25,7 @@ const plain = (ast) => {
     const lines = data.map((node) => mapping[node.status](node, path, iter));
     return lines.flat().join('\n');
   };
-  return iter(ast, '');
+  return iter(ast, []);
 };
 
 export default plain;

@@ -4,7 +4,7 @@ import parse from './parse.js';
 import buildAst from './buildAst.js';
 import format from './formatters/index.js';
 
-const getFullFilePath = (filepath) => path.resolve(filepath);
+const getFullFilePath = (filepath) => path.resolve(process.cwd(), filepath);
 
 const readFile = (filepath) => {
   const fullFilePath = getFullFilePath(filepath);
