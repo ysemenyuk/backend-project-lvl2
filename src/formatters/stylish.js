@@ -8,12 +8,7 @@ const stringify = (data, depth, mapping) => {
   if (!_.isPlainObject(data)) {
     return data;
   }
-
-  const lines = _.entries(data).map(([name, value]) => {
-    const node = { name, value };
-    return mapping.unchanged(node, depth);
-  });
-
+  const lines = _.entries(data).map(([name, value]) => mapping.unchanged({ name, value }, depth));
   return format(lines, depth);
 };
 
@@ -30,7 +25,6 @@ const stylish = (ast) => {
     const lines = data.map((node) => mapping[node.status](node, depth, iter));
     return format(lines, depth);
   };
-
   return iter(ast, 0);
 };
 
