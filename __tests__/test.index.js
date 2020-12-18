@@ -9,19 +9,19 @@ const jsonString = fs.readFileSync(getFixturePath('expected.json'), 'utf-8');
 const filesFormats = ['json', 'yml'];
 
 test('gendiff errors', () => {
-  const file1 = getFixturePath('file1.json');
-  const file2 = getFixturePath('file2.json');
-  const fileWithWrongExtension = getFixturePath('expected_stylish.txt');
-  expect(() => genDiff(file1)).toThrow();
-  expect(() => genDiff(file1, fileWithWrongExtension)).toThrow('cannot parse file this type');
-  expect(() => genDiff(file1, file2, 'wrongFormatter')).toThrow('no this formatter');
+  const filepath1 = getFixturePath('file1.json');
+  const filepath2 = getFixturePath('file2.json');
+  const filepath3 = getFixturePath('expected_stylish.txt');
+  expect(() => genDiff(filepath1)).toThrow();
+  expect(() => genDiff(filepath1, filepath3)).toThrow('cannot parse file this type');
+  expect(() => genDiff(filepath1, filepath2, 'sometext')).toThrow('no this formatter');
 });
 
 test.each(filesFormats)('gendiff %s-files', (extension) => {
-  const file1 = getFixturePath(`file1.${extension}`);
-  const file2 = getFixturePath(`file2.${extension}`);
-  expect(genDiff(file1, file2)).toEqual(formattedData('stylish'));
-  expect(genDiff(file1, file2, 'stylish')).toEqual(formattedData('stylish'));
-  expect(genDiff(file1, file2, 'plain')).toEqual(formattedData('plain'));
-  expect(genDiff(file1, file2, 'json')).toEqual(jsonString);
+  const filepath1 = getFixturePath(`file1.${extension}`);
+  const filepath2 = getFixturePath(`file2.${extension}`);
+  expect(genDiff(filepath1, filepath2)).toEqual(formattedData('stylish'));
+  expect(genDiff(filepath1, filepath2, 'stylish')).toEqual(formattedData('stylish'));
+  expect(genDiff(filepath1, filepath2, 'plain')).toEqual(formattedData('plain'));
+  expect(genDiff(filepath1, filepath2, 'json')).toEqual(jsonString);
 });
