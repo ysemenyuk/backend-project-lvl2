@@ -17,7 +17,7 @@ const buildAst = (object1, object2) => {
       return {
         name,
         status: 'deleted',
-        deletedValue: object1[name],
+        value: object1[name],
       };
     }
 
@@ -25,7 +25,7 @@ const buildAst = (object1, object2) => {
       return {
         name,
         status: 'nested',
-        value: buildAst(object1[name], object2[name]),
+        children: buildAst(object1[name], object2[name]),
       };
     }
 
@@ -33,8 +33,8 @@ const buildAst = (object1, object2) => {
       return {
         name,
         status: 'changed',
-        value: object2[name],
-        deletedValue: object1[name],
+        valueAfter: object2[name],
+        valueBefore: object1[name],
       };
     }
 

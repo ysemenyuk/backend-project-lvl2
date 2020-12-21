@@ -10,14 +10,14 @@ const stringify = (value) => {
   return value;
 };
 
-const fullName = (node, path) => path.concat(node.name).join('.');
+const getPropertyName = (node, path) => path.concat(node.name).join('.');
 
 const mapping = {
-  added: (node, path) => `Property '${fullName(node, path)}' was added with value: ${stringify(node.value)}`,
-  deleted: (node, path) => `Property '${fullName(node, path)}' was removed`,
-  changed: (node, path) => `Property '${fullName(node, path)}' was updated. From ${stringify(node.deletedValue)} to ${stringify(node.value)}`,
+  added: (node, path) => `Property '${getPropertyName(node, path)}' was added with value: ${stringify(node.value)}`,
+  deleted: (node, path) => `Property '${getPropertyName(node, path)}' was removed`,
+  changed: (node, path) => `Property '${getPropertyName(node, path)}' was updated. From ${stringify(node.valueBefore)} to ${stringify(node.valueAfter)}`,
   unchanged: () => [],
-  nested: (node, path, func) => func(node.value, [...path, node.name]),
+  nested: (node, path, func) => func(node.children, [...path, node.name]),
 };
 
 const plain = (ast) => {
